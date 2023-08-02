@@ -17,30 +17,34 @@ const theme = {
 
 const Stack = createStackNavigator();
 
-export default function App() {
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import Sidebar from "./src/components/SideBar";
+
+const Drawer = createDrawerNavigator();
+
+const App = () => {
   const [loaded] = useFonts({
-    "Poppins-Black": require("./assets/fonts/Poppins-ExtraBold.ttf"),
-    "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
-    "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
-  });
-
-  if (!loaded) {
-    return null;
-  }
-  return (
-    <NavigationContainer theme={theme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName={"SignIn"}
-      >
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-
-        {/* Tabs */}
-        <Stack.Screen name="Home" component={TabNavigation} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+        "Poppins-Black": require("./assets/fonts/Poppins-ExtraBold.ttf"),
+        "Poppins-Bold": require("./assets/fonts/Poppins-Bold.ttf"),
+        "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
+      });
+   
+      if (!loaded) {
+        return null;
+      }
+   
+    return (
+        <NavigationContainer>
+            <Drawer.Navigator
+                drawerContent={(props) => <Sidebar {...props} />}
+            >
+                <Drawer.Screen name="SignIn" component={SignInScreen} />
+                <Drawer.Screen name="SignUp" component={SignUpScreen} />
+                <Drawer.Screen name="Home" component={TabNavigation} />
+            </Drawer.Navigator>
+        </NavigationContainer>
+    );
 }
+
+export default App;
